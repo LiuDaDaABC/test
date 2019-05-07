@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% include 'pagination.html' %}
+{% block title %}搜索结果{% endblock %}
+{% block right-content %}
+    <div class="show-top-grids">
+        <div class="col-sm-10 show-grid-left main-grids">
+            <div class="recommended">
+                <div class="">
+                    <div class="recommended-info">
+                        <div class="heading">
+                            <h3>搜索结果</h3>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    {% if search_list %}
+                    {% for item in search_list %}
+                    <div class="col-md-3 resent-grid recommended-grid movie-video-grid">
+                        <div class="resent-grid-img recommended-grid-img">
+                            <a href="{% url 'videoDetail' item.id %}"><img src="{{item.img}}" width="333" height="477"/></a>
+                            <div class="time small-time show-time movie-time">
+                                <p>{{item.hour|slice:"4:9"}}</p>
+                            </div>
+                        </div>
+                        <div class="resent-grid-info recommended-grid-info recommended-grid-movie-info">
+                            <h5>
+                                <a href="{% url 'videoDetail' item.id %}" class="title">{{item.name}}</a>
+                            </h5>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="clearfix"> </div>
+                    {% include 'pagination.html' %}
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+{% endblock right-content %}

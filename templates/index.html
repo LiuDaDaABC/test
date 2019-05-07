@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 首页 {% endblock %}
+{% block right-content %}
+<div class="main-grids">
+    <!-- 第一行栏目 -->
+    <div class="top-grids">
+
+    <!-- 最热栏目 -->
+    <div class="recommended">
+        <div class="recommended-grids">
+            <div class="recommended-info">
+                <h3>新片精品</h3>
+            </div>
+            {% if hot_list %}
+            {% for item in hot_list %}
+            <div class="col-md-3 resent-grid recommended-grid slider-first">
+                <div class="resent-grid-img recommended-grid-img">
+                    <a href="{% url 'videoDetail' item.id %}"><img src="{{item.img}}" width="333" height="477" /></a>
+                    <div class="time small-time slider-time">
+                        <p>{{item.hour|slice:"4:9"}}</p>
+                    </div>
+                </div>
+                <div class="resent-grid-info recommended-grid-info">
+                    <h5><a href="{% url 'videoDetail' item.id %}" class="title">{{item.name}}</a></h5>
+                    <div class="slid-bottom-grids">
+                        <div class="slid-bottom-grid">
+                            <p class="author author-info"><a href="{% url 'videoCate' 1 %}" class="author" style="color: #000000">新片精品</a></p>
+                        </div>
+                        <div class="slid-bottom-grid slid-bottom-right">
+                            <p class="views views-info">{{item.views}} views</p>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+
+    <!-- 第二行栏目 -->
+    <div class="recommended">
+        <div class="recommended-grids">
+            <div class="recommended-info">
+                <h3>迅雷电影资源<span style="float:right;"><a href="{% url 'videoCate' 2 %}">更多>>></a></span></h3>
+            </div>
+            <script src="{% static 'js/responsiveslides.min.js' %}"></script>
+            <script>
+                $(function () {
+                  // Slideshow 4
+                  $("#slider3").responsiveSlides({
+                    auto: true,
+                    pager: false,
+                    nav: true,
+                    speed: 500,
+                    namespace: "callbacks",
+                    before: function () {
+                      $('.events').append("<li>before event fired.</li>");
+                    },
+                    after: function () {
+                      $('.events').append("<li>after event fired.</li>");
+                    }
+                  });
+
+                });
+            </script>
+            <div  id="top" class="callbacks_container">
+                <ul class="rslides" id="slider3">
+                    <!-- 第一页 -->
+                    <li>
+                        <div class="animated-grids">
+                            {% if analysis_list_1 %}
+                            {% for item in analysis_list_1 %}
+                            <div class="col-md-3 resent-grid recommended-grid slider-first">
+                                <div class="resent-grid-img recommended-grid-img">
+                                    <a href="{% url 'videoDetail' item.id %}"><img src="{{item.img}}" alt="" /></a>
+                                    <div class="time small-time slider-time">
+                                        <p>{{item.hour|slice:"4:9"}}</p>
+                                    </div>
+                                </div>
+                                <div class="resent-grid-info recommended-grid-info">
+                                    <h5><a href="{% url 'videoDetail' item.id %}" class="title">{{item.name}}</a></h5>
+                                    <div class="slid-bottom-grids">
+                                        <div class="slid-bottom-grid">
+                                            <p class="author author-info"><a href="{% url 'videoCate' 2 %}" class="author" style="color: #000000">迅雷电影资源</a></p>
+                                        </div>
+                                        <div class="slid-bottom-grid slid-bottom-right">
+                                            <p class="views views-info">{{item.views}} 观看</p>
+                                        </div>
+                                        <div class="clearfix"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            <div class="clearfix"> </div>
+                        </div>
+                    </li>
+
+                    <!-- 第二页 -->
+                    <li>
+                        <div class="animated-grids">
+                            {% if analysis_list_2 %}
+                            {% for item in analysis_list_2 %}
+                            <div class="col-md-3 resent-grid recommended-grid slider-first">
+                                <div class="resent-grid-img recommended-grid-img">
+                                   <a href="{% url 'videoDetail' item.id %}"><img src="{{item.img}}" alt="" /></a>
+                                    <div class="time small-time slider-time">
+                                        <p>{{item.hour|slice:"4:9"}}</p>
+                                    </div>
+                                </div>
+                                <div class="resent-grid-info recommended-grid-info">
+                                    <h5><a href="{% url 'videoDetail' item.id %}" class="title">{{item.name}}</a></h5>
+                                    <div class="slid-bottom-grids">
+                                        <div class="slid-bottom-grid">
+                                            <p class="author author-info"><a href="{% url 'videoCate' 2 %}" class="author" style="color: #000000">迅雷电影资源</a></p>
+                                        </div>
+                                        <div class="slid-bottom-grid slid-bottom-right">
+                                            <p class="views views-info">{{item.views}} views</p>
+                                        </div>
+                                        <div class="clearfix"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            <div class="clearfix"> </div>
+                        </div>
+                    </li>
+
+                    <!-- 第三页 -->
+                    <li>
+                        <div class="animated-grids">
+                            {% if analysis_list_3 %}
+                            {% for item in analysis_list_3 %}
+                            <div class="col-md-3 resent-grid recommended-grid slider-first">
+                                <div class="resent-grid-img recommended-grid-img">
+                                    <a href="{% url 'videoDetail' item.id %}"><img src="{{item.img}}" alt="" /></a>
+                                    <div class="time small-time slider-time">
+                                        <p>{{item.hour|slice:"4:9"}}</p>
+                                    </div>
+                                </div>
+                                <div class="resent-grid-info recommended-grid-info">
+                                    <h5><a href="{% url 'videoDetail' item.id %}" class="title">{{item.name}}</a></h5>
+                                    <div class="slid-bottom-grids">
+                                        <div class="slid-bottom-grid">
+                                            <p class="author author-info"><a href="{% url 'videoCate' 2 %}" class="author" style="color: #000000">迅雷电影资源</a></p>
+                                        </div>
+                                        <div class="slid-bottom-grid slid-bottom-right">
+                                            <p class="views views-info">{{item.views}} views</p>
+                                        </div>
+                                        <div class="clearfix"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            <div class="clearfix"> </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第三行栏目 -->
+    <div class="recommended">
+        <div class="recommended-grids">
+            <div class="recommended-info">
+                <h3>经典影片<span style="float:right;"><a href="{% url 'videoCate' 3 %}">更多>>></a></span></h3>
+            </div>
+            {% if classics_list %}
+            {% for item in classics_list %}
+            <div class="col-md-3 resent-grid recommended-grid slider-first">
+                <div class="resent-grid-img recommended-grid-img">
+                    <a href="{% url 'videoDetail' item.id %}"><img src="{{item.img}}" alt="" /></a>
+                    <div class="time small-time slider-time">
+                        <p>{{item.hour|slice:"4:9"}}</p>
+                    </div>
+                </div>
+                <div class="resent-grid-info recommended-grid-info">
+                    <h5><a href="{% url 'videoDetail' item.id %}" class="title">{{item.name}}</a></h5>
+                    <div class="slid-bottom-grids">
+                        <div class="slid-bottom-grid">
+                            <p class="author author-info"><a href="{% url 'videoCate' 3 %}" class="author" style="color: #000000">经典影片</a></p>
+                        </div>
+                        <div class="slid-bottom-grid slid-bottom-right">
+                            <p class="views views-info">{{item.views}} views</p>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+{% endblock right-content %}

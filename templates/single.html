@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block title %} {{video.name}} {% endblock %}
+{% block right-content %}
+<div class="show-top-grids">
+    <div class="col-sm-8 single-left">
+
+        <div class="song">
+            <div class="song-info">
+                <h3>{{ video.name }}</h3>    
+        </div>
+            <img src="{{ video.img }}">
+            <h4>简介：</h4>
+            <p>{{ video.introduce }}</p><br><br>
+            <h4>迅雷下载链接：</h4>
+
+            <div style="height: 80px; border: #0b0b0b 1px solid; line-height: 50px">
+                {% if user.is_authenticated %}
+                <div style="background: #fdfddf; height: 78px; line-height: 78px"><a style="font-size: 15px">{{ video.link }}</a></div>
+                {% else %}
+                    <div class="signin"><h4><strong>对不起，需要登录后才可观看链接。你可以</strong></h4></div>
+                    <div class="signin"><a href="{% url 'register' %}" class="play-icon popup-with-zoom-anim">注册</a></div>
+                    <div class="signin"><a href="{% url 'login' %}" class="play-icon popup-with-zoom-anim">登录</a></div>
+                {% endif %}
+            </div>
+
+
+            <div class="share">
+                <ul >
+                    <div class="col-md-4">
+                        <li style="float:left;"><a href="javascript:void(0);" class="icon like" id="lik" onclick="send({{ video.id }})">{{ likes }}点赞</a></li>
+                    </div>
+                    <div class="col-md-4">
+                        <li style="float:left;"><a href="javascript:void(0);" class="icon comment-icon">评论</a></li>
+                    </div>
+                    <div class="col-md-4">
+                        <li class="view" style="float:left;">{{video.views}} 次观看</li>
+                    </div>
+                </ul>
+                <script>
+                    function send(i) {
+                        {% if not user.is_authenticated %}
+                            alert("未登录,不能赞")
+                        {% else %}
+                            $.ajaxSetup({
+                                data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+                            });
+                            $.post("{% url 'like' %}", {vid:i}, function(a){
+                                $("#lik").text(a.lik+"点赞");
+                            });
+                        {% endif %}
+                    }
+                </script>
+            </div>
+
+
+
+
+        </div>
+
+        <div class="clearfix"> </div>
+
+        <div class="published row">
+            <div class="col-md-6">
+                <h4>发布于：{{ video.create_date }}</h4>
+                <p></p>
+            </div>
+            <div class="col-md-6">
+                <h4>分类：{{ video.cate }}</h4>
+                <a href="#"></a>
+            </div>
+        </div>
+        <!-- 评论 -->
+        <div class="all-comments">
+
+        <!-- 来必力City版安装代码 -->
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80Mzk4MS8yMDUxNw==">
+            <script type="text/javascript">
+           (function(d, s) {
+               var j, e = d.getElementsByTagName(s)[0];
+
+               if (typeof LivereTower === 'function') { return; }
+
+               j = d.createElement(s);
+               j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+               j.async = true;
+
+               e.parentNode.insertBefore(j, e);
+           })(document, 'script');
+            </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+        </div>
+        <!-- City版安装代码已完成 -->
+
+        </div>
+
+    </div>
+
+    <!-- 相关推荐 -->
+    <div class="col-md-4 single-right">
+        <h3>视频推荐</h3>
+        <div class="single-grid-right">
+            <!-- 存在专辑 -->
+            {% if video_set %}
+            {% for item in video_set %}
+            <div class="single-right-grids">
+                <div class="col-md-4 single-right-grid-left">
+                    <a href="{% url 'videoDetail' item.video.id %}"><img src="{{item.video.img}}" alt="" /></a>
+                </div>
+                <div class="col-md-8 single-right-grid-right">
+                    <a href="{% url 'videoDetail' item.video.id %}" class="title"> {{item.video}}</a>
+                    <p class="views">{{item.video.views}} views</p>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+
+{% endblock right-content %}

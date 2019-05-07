@@ -1,0 +1,88 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html lang='zh_CN'>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="{% static 'css/bootstrap.min.css' %}" rel='stylesheet' type='text/css' media="all" />
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' media="all" />
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://vjs.zencdn.net/7.5.4/video-js.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+
+</head>
+  <body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'index' %}"><h1><img src="{% static 'images/logoko.png' %}" alt="" width=153 height=49/></h1></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <div class="top-search">
+                <form class="navbar-form navbar-right" method="POST" action="{% url "search" %}">
+                    <input type="text" class="form-control" placeholder="搜索..." name="search">
+                    <input type="submit" value=" " >
+                </form>
+            </div>
+            <div class="header-top-right">
+                {% if user.is_authenticated %}
+                <div class="signin"><span  class="play-icon popup-with-zoom-anim" style="font-size: 15px">{{user.username}}</span></div>
+                <div class="signin"><a href="{% url 'logout' %}" class="play-icon popup-with-zoom-anim" title="注销" style="background: #67b168; color: #000000; font-size: 15px">注销</a></div>
+                {% else %}
+                <div class="signin"><a href="{% url 'register' %}" class="play-icon popup-with-zoom-anim" style="background: #c1e2b3; color: #000000; font-size: 15px">注册</a></div>
+                <div class="signin"><a href="{% url 'login' %}" class="play-icon popup-with-zoom-anim" style="background: #c1e2b3; color: #000000; font-size: 15px">登录</a></div>
+                {% endif %}
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+      </div>
+    </nav>
+    <!-- 左侧菜单 -->
+    <div class="col-sm-3 col-md-2 sidebar">
+        <div class="drop-navigation drop-navigation">
+          <ul class="nav nav-sidebar">
+            <li><a></a></li>
+            <li class="active">
+                <a href="{% url 'index' %}" class="home-icon"><span class="glyphicon glyphicon-home"></span>首页</a>
+            </li>
+            {% for m in menu_list %}
+            <li>
+                <a href="{% url 'videoCate' m.id %}" class="user-icon"><span class="glyphicon glyphicon-home glyphicon-th"></span>{{m.name}}</a>
+            </li>
+            {% endfor %}
+            <li>
+                <a href="{% url 'viewHistory' %}" class="sub-icon" onclick="history()"><span class="glyphicon glyphicon-home glyphicon-hourglass"></span>观看历史</a>
+                <script>
+                    function history() {
+                        {% if not user.is_authenticated %}
+                            alert("未登录")
+                        {% endif %}
+                    }
+                </script>
+            </li>
+          </ul>
+            <div class="side-bottom">
+                <div class="side-bottom-icons">
+                    <ul class="nav2">
+                        <li><img src=""/></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧内容 -->
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        {% block right-content %}
+        {% endblock right-content %}
+    </div>
+    <div class="clearfix"></div>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+  </body>
+</html>
